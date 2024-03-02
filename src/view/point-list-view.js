@@ -1,4 +1,4 @@
-import {createElement} from '../render.js';
+import { createElement } from '../render.js';
 import { createPointListTemplate } from '../template/point-list-template.js';
 
 export default class PointListView {
