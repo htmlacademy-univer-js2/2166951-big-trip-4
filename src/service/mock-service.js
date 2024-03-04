@@ -10,13 +10,13 @@ export default class MockService {
   }
 
   generateDestinations() {
-    return Array.from({ length: 5 }, () => generateDestination());
+    return Array.from({ length: 5 }, generateDestination);
   }
 
   generateOffers() {
     return POINT_TYPES.map((type) => ({
       type,
-      offers: Array.from({ length: 5 }, () => generateOffer())
+      offers: Array.from({ length: 5 }, generateOffer)
     }));
   }
 

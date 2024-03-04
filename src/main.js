@@ -9,10 +9,10 @@ const pageMainElement = document.querySelector('.page-main');
 const tripEventsElement = pageMainElement.querySelector('.trip-events');
 const tripControlsElement = tripMainElement.querySelector('.trip-controls__filters');
 
-const mockService = new MockService();
-const destinationsModel = new DestinationsModel({ service: mockService });
-const offersModel = new OffersModel({ service: mockService });
-const pointsModel = new PointsModel({ service: mockService });
+const service = new MockService();
+const destinationsModel = new DestinationsModel({ service });
+const offersModel = new OffersModel({ service });
+const pointsModel = new PointsModel({ service });
 
 const tripPresenter = new TripPresenter({
   tripContainer: tripEventsElement,

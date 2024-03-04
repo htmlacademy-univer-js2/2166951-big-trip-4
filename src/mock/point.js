@@ -7,7 +7,7 @@ export const generatePoint = (type, destinationId, offerIds) => ({
   dateFrom: getRandomDate(),
   dateTo: getRandomDate({ next: true }),
   destination: destinationId,
-  isFavorite: !!getRandomInteger(0, 1),
+  isFavorite: Boolean(getRandomInteger(0, 1)),
   offers: offerIds,
   type,
 });

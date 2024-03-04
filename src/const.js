@@ -1,10 +1,8 @@
-const SEC_IN_MIN = 60;
-const MIN_IN_HOUR = 60;
-const HOUR_IN_DAY = 24;
-
-export const MSEC_IN_SEC = 1000;
-export const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
-export const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
+export const TimePeriods = {
+  MSEC_IN_SEC: 1000,
+  MSEC_IN_HOUR: 60 * 60 * 1000,
+  MSEC_IN_DAY: 24 * 60 * 60 * 1000
+};
 
 export const POINT_TYPES = [
   'taxi',
