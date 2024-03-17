@@ -21,3 +21,7 @@ export const getPointDuration = (dateFrom, dateTo) => {
   }
   return dayjs.duration(timeDiff).format('mm[M]');
 };
+
+export const isPointFuture = (point) => dayjs().isBefore(point.dateFrom);
+export const isPointPast = (point) => dayjs().isAfter(point.dateTo);
+export const isPointPresent = (point) => dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
