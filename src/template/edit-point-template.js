@@ -1,6 +1,7 @@
 import { POINT_TYPES } from '../const';
 import { POINT_DESTINATIONS } from '../mock/const';
-import { capitalize, getLastWord, formatStringToDateTime } from '../utils';
+import { formatStringToDateTime } from '../utils/point';
+import { capitalize, getLastWord } from '../utils/common';
 
 const createPointTypesTemplate = () => `
   <fieldset class="event__type-group">

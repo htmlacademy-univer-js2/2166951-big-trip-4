@@ -3,7 +3,7 @@ import {
   formatStringToShortDate,
   formatStringToTime,
   getPointDuration,
-} from '../utils';
+} from '../utils/point';
 
 const createOffersTemplate = ({ offers, offerIds }) => `
   <ul class="event__selected-offers">

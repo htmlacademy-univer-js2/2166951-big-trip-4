@@ -1,4 +1,4 @@
-import { capitalize } from '../utils';
+import { capitalize } from '../utils/common';
 
 export const createFilterTemplate = ({filters}) => `
   <form class="trip-filters" action="#" method="get">

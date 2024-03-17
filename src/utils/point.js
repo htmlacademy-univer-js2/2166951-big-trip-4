@@ -1,4 +1,4 @@
-import { TimePeriods } from './const';
+import { TimePeriods } from '../const';
 
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -7,8 +7,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-export const getLastWord = (str) => str.split(' ').pop().toLowerCase();
-export const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 export const formatStringToDateTime = (date) => dayjs(date).format('DD/MM/YY HH:mm');
 export const formatStringToShortDate = (date) => dayjs(date).format('MMM DD');
 export const formatStringToTime = (date) => dayjs(date).format('HH:mm');
