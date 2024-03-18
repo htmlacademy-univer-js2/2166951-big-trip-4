@@ -4,6 +4,13 @@ export const TimePeriods = {
   MSEC_IN_DAY: 24 * 60 * 60 * 1000
 };
 
+export const PointFilters = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past',
+};
+
 export const POINT_TYPES = [
   'taxi',
   'flight',
@@ -14,13 +21,6 @@ export const POINT_TYPES = [
   'check-in',
   'sightseeing',
   'restaurant',
-];
-
-export const POINT_FILTERS = [
-  'everything',
-  'future',
-  'present',
-  'past',
 ];
 
 export const POINT_SORTS = [

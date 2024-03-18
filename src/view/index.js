@@ -4,6 +4,7 @@ import PointListView from './point-list-view';
 import PointView from './point-view';
 import TripInfoView from './trip-info-view';
 import SortView from './sort-view';
+import EmptyListView from './empty-list-view';
 
 export {
   EditPointView,
@@ -11,5 +12,6 @@ export {
   PointListView,
   PointView,
   TripInfoView,
-  SortView
+  SortView,
+  EmptyListView
 };

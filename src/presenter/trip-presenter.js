@@ -1,9 +1,10 @@
-import { SortView, PointListView, PointView, EditPointView } from '../view';
+import { SortView, PointListView, PointView, EditPointView, EmptyListView } from '../view';
 import { render, replace } from '../framework/render.js';
 import { isEscapeKey } from '../utils/common.js';
 
 export default class TripPresenter {
   #pointListComponent = new PointListView();
+  #emptyListComponent = new EmptyListView();
   #sortComponent = new SortView();
   #tripContainer = null;
   #destinationsModel = null;
@@ -20,6 +21,11 @@ export default class TripPresenter {
   }
 
   init() {
+    if (!this.#points.length) {
+      render(this.#emptyListComponent, this.#tripContainer);
+      return;
+    }
+
     this.#renderTrip();
   }
 
