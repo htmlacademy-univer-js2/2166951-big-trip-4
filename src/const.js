@@ -11,6 +11,19 @@ export const PointFilters = {
   PAST: 'past',
 };
 
+export const Mode = {
+  DEFAULT: 'default',
+  EDITING: 'editing',
+};
+
+export const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers'
+};
+
 export const POINT_TYPES = [
   'taxi',
   'flight',
