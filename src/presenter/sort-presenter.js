@@ -1,4 +1,4 @@
-import { SortType } from '../const';
+import { EnabledSortType, SortType } from '../const';
 import { render } from '../framework/render';
 import { SortView } from '../view';
 
@@ -15,9 +15,15 @@ export default class SortPresenter {
   }
 
   init() {
+    const items = Object.values(SortType).map((type) => ({
+      type,
+      isChecked: type === this.#currentSortType,
+      isDisabled: !EnabledSortType[type],
+    }));
+
     this.#sortComponent = new SortView({
-      sortType: this.#currentSortType,
-      onSortChange: this.#onSortChange,
+      items,
+      onItemChange: this.#onSortChange,
     });
 
     render(this.#sortComponent, this.#container);

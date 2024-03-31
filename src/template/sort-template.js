@@ -8,7 +8,7 @@ export const createSortTemplate = ({ sorts }) => `
           type="radio"
           name="trip-sort"
           value="sort-${type}"
-          data-sort-type="${type}"
+          data-item="${type}"
           ${isDisabled ? 'disabled' : ''}
           ${isChecked ? 'checked' : ''}
         >

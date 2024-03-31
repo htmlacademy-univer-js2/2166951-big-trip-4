@@ -1,28 +1,8 @@
-import { EnabledSortType, SortType } from '../const.js';
-import AbstractView from '../framework/view/abstract-view.js';
 import { createSortTemplate } from '../template/sort-template.js';
+import AbstractRadioListView from './abstract-radio-list-view.js';
 
-export default class SortView extends AbstractView {
-  #items = [];
-  #onSortChange = null;
-
-  constructor({ sortType, onSortChange }) {
-    super();
-    this.#items = Object.values(SortType).map((type) => ({
-      type,
-      isChecked: type === sortType,
-      isDisabled: !EnabledSortType[type],
-    }));
-    this.#onSortChange = onSortChange;
-    this.element.addEventListener('change', this.#sortChangeHandler);
-  }
-
+export default class SortView extends AbstractRadioListView {
   get template() {
-    return createSortTemplate({ sorts: this.#items });
+    return createSortTemplate({ sorts: this.items });
   }
-
-  #sortChangeHandler = (evt) => {
-    evt.preventDefault();
-    this.#onSortChange(evt.target.dataset.sortType);
-  };
 }
