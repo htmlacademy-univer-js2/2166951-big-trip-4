@@ -24,6 +24,14 @@ export const SortType = {
   OFFERS: 'offers'
 };
 
+export const EnabledSortType = {
+  [SortType.DAY]: true,
+  [SortType.EVENT]: false,
+  [SortType.TIME]: true,
+  [SortType.PRICE]: true,
+  [SortType.OFFERS]: false
+};
+
 export const POINT_TYPES = [
   'taxi',
   'flight',
@@ -34,14 +42,6 @@ export const POINT_TYPES = [
   'check-in',
   'sightseeing',
   'restaurant',
-];
-
-export const POINT_SORTS = [
-  { type: 'day', isDisabled: false },
-  { type: 'event', isDisabled: true },
-  { type: 'time', isDisabled: false },
-  { type: 'price', isDisabled: false },
-  { type: 'offers', isDisabled: true },
 ];
 
 export const POINT_EMPTY = {
