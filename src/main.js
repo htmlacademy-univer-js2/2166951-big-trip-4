@@ -26,6 +26,7 @@ const tripPresenter = new TripPresenter({
 });
 
 
+
 render(new TripInfoView(), tripMainElement, RenderPosition.AFTERBEGIN);
 filterPresenter.init();
 tripPresenter.init();
