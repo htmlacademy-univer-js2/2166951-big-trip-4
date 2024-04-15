@@ -97,7 +97,7 @@ export const createEditPointTemplate = ({ point, destinations, offers }) => {
               type="text"
               name="event-destination"
               value="${currentDestination.name}"
-              list="destination-list-1
+              list="destination-list-1"
             >
             ${createPointCitiesTemplate()}
           </div>
