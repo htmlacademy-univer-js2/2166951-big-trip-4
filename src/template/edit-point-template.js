@@ -41,7 +41,9 @@ const createOffersTemplate = ({ currentOffers, selectedOffers }) => `
         <input
           class="event__offer-checkbox  visually-hidden"
           id="event-offer-${offerType}-${offer.id}"
-          type="checkbox" name="event-offer-${offerType}"
+          type="checkbox"
+          name="event-offer-${offerType}"
+          data-offer-id="${offer.id}"
           ${checked}
         >
         <label
