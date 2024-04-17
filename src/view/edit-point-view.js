@@ -1,12 +1,15 @@
 import { POINT_EMPTY } from '../const.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { createEditPointTemplate } from '../template/edit-point-template.js';
+import CalendarView from './calendar-view.js';
 
 export default class EditPointView extends AbstractStatefulView {
   #destinations = null;
   #offers = null;
   #onEditReset = null;
   #onEditSubmit = null;
+  #calendarFrom = null;
+  #calendarTo = null;
 
   constructor({
     point = POINT_EMPTY,
@@ -25,6 +28,20 @@ export default class EditPointView extends AbstractStatefulView {
   }
 
   reset = (point) => this.updateElement({ point });
+
+  removeElement = () => {
+    super.removeElement();
+
+    if (this.#calendarFrom) {
+      this.#calendarFrom.destroy();
+      this.#calendarFrom = null;
+    }
+
+    if (this.#calendarTo) {
+      this.#calendarTo.destroy();
+      this.#calendarTo = null;
+    }
+  };
 
   _restoreHandlers = () => {
     this.element
@@ -50,6 +67,26 @@ export default class EditPointView extends AbstractStatefulView {
     this.element
       .querySelector('.event__available-offers')
       ?.addEventListener('change', this.#offerChangeHandler);
+
+    this.#setCalendars();
+  };
+
+  #setCalendars = () => {
+    const [dateFromElement, dateToElement] = this.element.querySelectorAll('.event__input--time');
+
+    this.#calendarFrom = new CalendarView({
+      element: dateFromElement,
+      defaultDate: this._state.point.dateFrom,
+      maxDate: this._state.point.dateTo,
+      onClose: this.#dateFromCloseHandler,
+    });
+
+    this.#calendarTo = new CalendarView({
+      element: dateToElement,
+      defaultDate: this._state.point.dateTo,
+      minDate: this._state.point.dateFrom,
+      onClose: this.#dateToCloseHandler,
+    });
   };
 
   #resetClickHandler = (evt) => {
@@ -101,6 +138,28 @@ export default class EditPointView extends AbstractStatefulView {
         offers: selectedOffers.map((element) => element.dataset.offerId),
       }
     });
+  };
+
+  #dateFromCloseHandler = ([userDate]) => {
+    this._setState({
+      point: {
+        ...this._state.point,
+        dateFrom: userDate
+      }
+    });
+
+    this.#calendarTo.setMinDate(this._state.point.dateFrom);
+  };
+
+  #dateToCloseHandler = ([userDate]) => {
+    this._setState({
+      point: {
+        ...this._state.point,
+        dateTo: userDate
+      }
+    });
+
+    this.#calendarFrom.setMaxDate(this._state.point.dateTo);
   };
 
   get template() {
