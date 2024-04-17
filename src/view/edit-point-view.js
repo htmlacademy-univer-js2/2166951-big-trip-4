@@ -49,7 +49,7 @@ export default class EditPointView extends AbstractStatefulView {
 
     this.element
       .querySelector('.event__available-offers')
-      .addEventListener('change', this.#offerChangeHandler);
+      ?.addEventListener('change', this.#offerChangeHandler);
   };
 
   #resetClickHandler = (evt) => {
