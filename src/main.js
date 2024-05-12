@@ -1,4 +1,4 @@
-import { DestinationsModel, OffersModel, PointsModel } from './model';
+import { DestinationsModel, FilterModel, OffersModel, PointsModel } from './model';
 import { TripInfoView } from './view';
 import { render, RenderPosition } from './framework/render.js';
 import { FilterPresenter, TripPresenter } from './presenter';
@@ -13,16 +13,20 @@ const service = new MockService();
 const destinationsModel = new DestinationsModel({ service });
 const offersModel = new OffersModel({ service });
 const pointsModel = new PointsModel({ service });
+const filterModel = new FilterModel();
 
 const filterPresenter = new FilterPresenter({
-  filterContainer: tripControlsElement,
-  pointsModel
+  container: tripControlsElement,
+  pointsModel,
+  filterModel,
 });
+
 const tripPresenter = new TripPresenter({
-  tripContainer: tripEventsElement,
+  container: tripEventsElement,
   destinationsModel,
   offersModel,
   pointsModel,
+  filterModel,
 });
 
 

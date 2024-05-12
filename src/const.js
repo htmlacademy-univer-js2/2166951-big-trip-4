@@ -11,6 +11,13 @@ export const PointFilters = {
   PAST: 'past',
 };
 
+export const EmptyListMessage = {
+  [PointFilters.EVERYTHING]: 'Click New Event to create your first point',
+  [PointFilters.FUTURE]: 'There are no future events now',
+  [PointFilters.PRESENT]: 'There are no present events now',
+  [PointFilters.PAST]: 'There are no past events now'
+};
+
 export const Mode = {
   DEFAULT: 'default',
   EDITING: 'editing',
@@ -53,3 +60,21 @@ export const POINT_EMPTY = {
   offers: [],
   type: null,
 };
+
+export const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  ADD_POINT: 'ADD_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+};
+
+export const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR'
+};
+
+export const EditType = {
+  EDITING: 'EDITING',
+  CREATING: 'CREATING',
+};
+

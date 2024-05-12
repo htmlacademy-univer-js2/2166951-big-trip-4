@@ -8,6 +8,7 @@ export default class EditPointView extends AbstractStatefulView {
   #offers = null;
   #onEditReset = null;
   #onEditSubmit = null;
+  #onEditDelete = null;
   #calendarFrom = null;
   #calendarTo = null;
 
@@ -17,12 +18,14 @@ export default class EditPointView extends AbstractStatefulView {
     offers,
     onEditReset,
     onEditSubmit,
+    onEditDelete,
   }) {
     super();
     this.#destinations = destinations;
     this.#offers = offers;
     this.#onEditReset = onEditReset;
     this.#onEditSubmit = onEditSubmit;
+    this.#onEditDelete = onEditDelete;
     this._setState(EditPointView.parsePointToState({point}));
     this._restoreHandlers();
   }
@@ -67,6 +70,10 @@ export default class EditPointView extends AbstractStatefulView {
     this.element
       .querySelector('.event__available-offers')
       ?.addEventListener('change', this.#offerChangeHandler);
+
+    this.element
+      .querySelector('.event__reset-btn')
+      .addEventListener('click', this.#deleteClickHandler);
 
     this.#setCalendars();
   };
@@ -120,11 +127,17 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   #destinationChangeHandler = (evt) => {
-    const selectedDestination = this.#destinations.find((destination) => destination.name === evt.target.value).id;
+    const selectedDestination = this.#destinations
+      .find((destination) => destination.name === evt.target.value);
+
+    if (!selectedDestination) {
+      return;
+    }
+
     this.updateElement({
       point: {
         ...this._state.point,
-        destination: selectedDestination,
+        destination: selectedDestination.id,
       }
     });
   };
@@ -160,6 +173,11 @@ export default class EditPointView extends AbstractStatefulView {
     });
 
     this.#calendarFrom.setMaxDate(this._state.point.dateTo);
+  };
+
+  #deleteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#onEditDelete(EditPointView.parseStateToPoint(this._state));
   };
 
   get template() {

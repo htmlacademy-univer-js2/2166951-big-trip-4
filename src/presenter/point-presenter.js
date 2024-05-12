@@ -1,6 +1,7 @@
-import { Mode } from '../const';
+import { Mode, UpdateType, UserAction } from '../const';
 import { remove, render, replace } from '../framework/render';
 import { isEscapeKey } from '../utils/common';
+import { isBigDifference } from '../utils/point';
 import { EditPointView, PointView } from '../view';
 
 export default class PointPresenter {
@@ -51,6 +52,7 @@ export default class PointPresenter {
       offers: this.#offersModel.getAll(),
       onEditReset: this.#onEditPointReset,
       onEditSubmit: this.#onEditPointSubmit,
+      onEditDelete: this.#onEditDelete,
     });
 
     if (!prevPointComponent || !prevEditPointComponent) {
@@ -105,10 +107,14 @@ export default class PointPresenter {
   };
 
   #onFavoriteClick = () => {
-    this.#handleDataChange({
-      ...this.#point,
-      isFavorite: !this.#point.isFavorite,
-    });
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.PATCH,
+      {
+        ...this.#point,
+        isFavorite: !this.#point.isFavorite,
+      }
+    );
   };
 
   #onEditPointClick = () => {
@@ -120,8 +126,22 @@ export default class PointPresenter {
     this.#switchToPoint();
   };
 
-  #onEditPointSubmit = (updatePoint) => {
-    this.#handleDataChange(updatePoint);
+  #onEditPointSubmit = (point) => {
+    const isMinor = isBigDifference(point, this.#point);
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      isMinor ? UpdateType.MINOR : UpdateType.PATCH,
+      point
+    );
+
     this.#switchToPoint();
+  };
+
+  #onEditDelete = (point) => {
+    this.#handleDataChange(
+      UserAction.DELETE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
   };
 }
