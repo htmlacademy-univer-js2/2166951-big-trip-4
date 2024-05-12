@@ -69,10 +69,10 @@ export default class TripPresenter {
     this.#newPointPresenter.init();
   };
 
-  #handleNewPointDestroy = () => {
+  #handleNewPointDestroy = ({isCanceled}) => {
     this.#isCreating = false;
     this.#newPointButtonPresenter.enableButton();
-    if (!this.points.length) {
+    if (!this.points.length && isCanceled) {
       this.#clearTrip();
       this.#renderTrip();
     }
