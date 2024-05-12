@@ -51,6 +51,14 @@ export const POINT_TYPES = [
   'restaurant',
 ];
 
+export const ButtonLabel = {
+  CANCEL: 'Cancel',
+  DELETE: 'Delete',
+  SAVE: 'Save'
+};
+
+const DEFAULT_TYPE = 'flight';
+
 export const POINT_EMPTY = {
   basePrice: 0,
   dateFrom: null,
@@ -58,7 +66,7 @@ export const POINT_EMPTY = {
   destination: null,
   isFavorite: false,
   offers: [],
-  type: null,
+  type: DEFAULT_TYPE,
 };
 
 export const UserAction = {

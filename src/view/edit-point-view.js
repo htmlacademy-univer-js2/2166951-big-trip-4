@@ -1,4 +1,4 @@
-import { POINT_EMPTY } from '../const.js';
+import { EditType, POINT_EMPTY } from '../const.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { createEditPointTemplate } from '../template/edit-point-template.js';
 import CalendarView from './calendar-view.js';
@@ -6,26 +6,29 @@ import CalendarView from './calendar-view.js';
 export default class EditPointView extends AbstractStatefulView {
   #destinations = null;
   #offers = null;
-  #onEditReset = null;
-  #onEditSubmit = null;
-  #onEditDelete = null;
+  #handleFormClose = null;
+  #handleFormSubmit = null;
+  #handleFormDelete = null;
   #calendarFrom = null;
   #calendarTo = null;
+  #pointType = null;
 
   constructor({
     point = POINT_EMPTY,
     destinations,
     offers,
-    onEditReset,
-    onEditSubmit,
-    onEditDelete,
+    onClose,
+    onSubmit,
+    onDelete,
+    pointType = EditType.EDITING,
   }) {
     super();
     this.#destinations = destinations;
     this.#offers = offers;
-    this.#onEditReset = onEditReset;
-    this.#onEditSubmit = onEditSubmit;
-    this.#onEditDelete = onEditDelete;
+    this.#handleFormClose = onClose;
+    this.#handleFormSubmit = onSubmit;
+    this.#handleFormDelete = onDelete;
+    this.#pointType = pointType;
     this._setState(EditPointView.parsePointToState({point}));
     this._restoreHandlers();
   }
@@ -47,13 +50,25 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   _restoreHandlers = () => {
+    if (this.#pointType === EditType.EDITING) {
+      this.element
+        .querySelector('.event__rollup-btn')
+        .addEventListener('click', this.#closeClickHandler);
+
+      this.element
+        .querySelector('.event__reset-btn')
+        .addEventListener('click', this.#deleteClickHandler);
+    }
+
+    if (this.#pointType === EditType.CREATING) {
+      this.element
+        .querySelector('.event__reset-btn')
+        .addEventListener('click', this.#closeClickHandler);
+    }
+
     this.element
       .querySelector('form')
       .addEventListener('submit', this.#submitClickHandler);
-
-    this.element
-      .querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#resetClickHandler);
 
     this.element
       .querySelector('.event__type-group')
@@ -70,10 +85,6 @@ export default class EditPointView extends AbstractStatefulView {
     this.element
       .querySelector('.event__available-offers')
       ?.addEventListener('change', this.#offerChangeHandler);
-
-    this.element
-      .querySelector('.event__reset-btn')
-      .addEventListener('click', this.#deleteClickHandler);
 
     this.#setCalendars();
   };
@@ -96,14 +107,14 @@ export default class EditPointView extends AbstractStatefulView {
     });
   };
 
-  #resetClickHandler = (evt) => {
+  #closeClickHandler = (evt) => {
     evt.preventDefault();
-    this.#onEditReset();
+    this.#handleFormClose();
   };
 
   #submitClickHandler = (evt) => {
     evt.preventDefault();
-    this.#onEditSubmit(EditPointView.parseStateToPoint(this._state));
+    this.#handleFormSubmit(EditPointView.parseStateToPoint(this._state));
   };
 
   #typeChangeHandler = (evt) => {
@@ -129,7 +140,6 @@ export default class EditPointView extends AbstractStatefulView {
   #destinationChangeHandler = (evt) => {
     const selectedDestination = this.#destinations
       .find((destination) => destination.name === evt.target.value);
-
     if (!selectedDestination) {
       return;
     }
@@ -177,7 +187,7 @@ export default class EditPointView extends AbstractStatefulView {
 
   #deleteClickHandler = (evt) => {
     evt.preventDefault();
-    this.#onEditDelete(EditPointView.parseStateToPoint(this._state));
+    this.#handleFormDelete(EditPointView.parseStateToPoint(this._state));
   };
 
   get template() {
@@ -185,6 +195,7 @@ export default class EditPointView extends AbstractStatefulView {
       point: this._state.point,
       destinations: this.#destinations,
       offers: this.#offers,
+      pointType: this.#pointType,
     });
   }
 

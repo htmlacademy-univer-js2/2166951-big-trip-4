@@ -8,10 +8,10 @@ export default class SortPresenter {
   #handleSortChange = null;
   #currentSortType = null;
 
-  constructor({ container, currentSortType, handleSortChange }) {
+  constructor({ container, currentSortType, onSortChange }) {
     this.#container = container;
     this.#currentSortType = currentSortType;
-    this.#handleSortChange = handleSortChange;
+    this.#handleSortChange = onSortChange;
   }
 
   get sortItems() {
@@ -27,7 +27,7 @@ export default class SortPresenter {
 
     this.#sortComponent = new SortView({
       items: this.sortItems,
-      onItemChange: this.#onSortChange,
+      onItemChange: this.#sortChangeHandler,
     });
 
     if (!prevSortComponent) {
@@ -43,7 +43,7 @@ export default class SortPresenter {
     remove(this.#sortComponent);
   }
 
-  #onSortChange = (sortType) => {
+  #sortChangeHandler = (sortType) => {
     if (this.#currentSortType !== sortType) {
       this.#currentSortType = sortType;
       this.#handleSortChange(sortType);
