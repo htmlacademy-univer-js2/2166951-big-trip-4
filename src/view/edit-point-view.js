@@ -1,4 +1,4 @@
-import { EditType, POINT_EMPTY } from '../const.js';
+import { FormType, POINT_EMPTY } from '../const.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { createEditPointTemplate } from '../template/edit-point-template.js';
 import CalendarView from './calendar-view.js';
@@ -20,7 +20,7 @@ export default class EditPointView extends AbstractStatefulView {
     onClose,
     onSubmit,
     onDelete,
-    pointType = EditType.EDITING,
+    pointType = FormType.EDITING,
   }) {
     super();
     this.#destinations = destinations;
@@ -50,7 +50,7 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   _restoreHandlers = () => {
-    if (this.#pointType === EditType.EDITING) {
+    if (this.#pointType === FormType.EDITING) {
       this.element
         .querySelector('.event__rollup-btn')
         .addEventListener('click', this.#closeClickHandler);
@@ -60,7 +60,7 @@ export default class EditPointView extends AbstractStatefulView {
         .addEventListener('click', this.#deleteClickHandler);
     }
 
-    if (this.#pointType === EditType.CREATING) {
+    if (this.#pointType === FormType.CREATING) {
       this.element
         .querySelector('.event__reset-btn')
         .addEventListener('click', this.#closeClickHandler);
@@ -132,7 +132,7 @@ export default class EditPointView extends AbstractStatefulView {
     this._setState({
       point: {
         ...this._state.point,
-        basePrice: Number(evt.target.value),
+        basePrice: evt.target.value,
       }
     });
   };
@@ -192,13 +192,24 @@ export default class EditPointView extends AbstractStatefulView {
 
   get template() {
     return createEditPointTemplate({
-      point: this._state.point,
+      state: this._state,
       destinations: this.#destinations,
       offers: this.#offers,
       pointType: this.#pointType,
     });
   }
 
-  static parsePointToState = ({ point }) => ({ point });
+  static parsePointToState = ({
+    point,
+    isDisabled = false,
+    isSaving = false,
+    isDeleting = false
+  }) => ({
+    point,
+    isDisabled,
+    isSaving,
+    isDeleting
+  });
+
   static parseStateToPoint = (state) => state.point;
 }
