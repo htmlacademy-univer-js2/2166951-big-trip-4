@@ -132,7 +132,7 @@ export default class PointPresenter {
   };
 
   #handleDocumentEscKeydown = (evt) => {
-    if (isEscapeKey(evt) && !this.#editPointComponent._state.isDisabled) {
+    if (isEscapeKey(evt) && !this.#editPointComponent.isDisabled) {
       evt.preventDefault();
       this.#editPointComponent.reset(this.#point);
       this.#switchToPoint();
@@ -155,7 +155,7 @@ export default class PointPresenter {
   };
 
   #handleEditPointClose = () => {
-    if (!this.#editPointComponent._state.isDisabled) {
+    if (!this.#editPointComponent.isDisabled) {
       this.#editPointComponent.reset(this.#point);
       this.#switchToPoint();
     }
@@ -169,7 +169,7 @@ export default class PointPresenter {
       point
     );
 
-    if (!this.#editPointComponent._state.isDisabled) {
+    if (!this.#editPointComponent.isDisabled) {
       this.#switchToPoint();
     }
   };

@@ -199,6 +199,18 @@ export default class EditPointView extends AbstractStatefulView {
     });
   }
 
+  get isDisabled() {
+    return this._state.isDisabled;
+  }
+
+  get isSaving() {
+    return this._state.isDisabled;
+  }
+
+  get isDeleting() {
+    return this._state.isDeleting;
+  }
+
   static parsePointToState = ({
     point,
     isDisabled = false,
