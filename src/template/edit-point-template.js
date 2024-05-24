@@ -1,4 +1,4 @@
-import { ButtonLabel, FormType, POINT_TYPES, POINT_DESTINATIONS } from '../const';
+import { ButtonLabel, FormType } from '../const';
 import { formatStringToDateTime } from '../utils/point';
 import { capitalize, getLastWord } from '../utils/common';
 import he from 'he';
@@ -41,10 +41,10 @@ const createPointEditButtonsTemplate = ({ pointType, isDisabled, isSaving, isDel
   `;
 };
 
-const createPointTypesTemplate = ({ isDisabled }) => `
+const createPointTypesTemplate = ({ offers, isDisabled }) => `
   <fieldset class="event__type-group">
     <legend class="visually-hidden">Event type</legend>
-    ${POINT_TYPES.map((type) => `
+    ${offers.map(({ type }) => `
       <div class="event__type-item">
         <input
           id="event-type-${type}-1"
@@ -64,12 +64,12 @@ const createPointTypesTemplate = ({ isDisabled }) => `
   </fieldset>
 `;
 
-const createPointCitiesTemplate = ({ isDisabled }) => `
+const createPointCitiesTemplate = ({ destinations, isDisabled }) => `
   <datalist
     id="destination-list-1"
     ${(isDisabled) ? 'disabled' : ''}
   >
-    ${POINT_DESTINATIONS.map((city) => `<option value="${city}"></option>`).join('')}
+    ${destinations.map(({ name }) => `<option value="${name}"></option>`).join('')}
   </datalist>
 `;
 
@@ -175,7 +175,7 @@ export const createEditPointTemplate = ({ state, destinations, offers, pointType
               ${isDisabled ? 'disabled' : ''}
             >
             <div class="event__type-list">
-              ${createPointTypesTemplate({ isDisabled })}
+              ${createPointTypesTemplate({ offers, isDisabled })}
             </div>
           </div>
 
@@ -192,7 +192,7 @@ export const createEditPointTemplate = ({ state, destinations, offers, pointType
               list="destination-list-1"
               ${isDisabled ? 'disabled' : ''}
             >
-            ${createPointCitiesTemplate({ isDisabled })}
+            ${createPointCitiesTemplate({ destinations, isDisabled })}
           </div>
 
           <div class="event__field-group  event__field-group--time">
