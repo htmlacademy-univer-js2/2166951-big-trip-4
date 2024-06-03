@@ -18,24 +18,22 @@ const createPointEditButtonsTemplate = ({ pointType, isDisabled, isSaving, isDel
     <button
       class="event__save-btn  btn  btn--blue"
       type="submit"
-      ${(isDisabled) ? 'disabled' : ''}
+      ${isDisabled ? 'disabled' : ''}
     >
       ${saveLabel}
     </button>
     <button
       class="event__reset-btn"
       type="reset"
-      ${(isDisabled) ? 'disabled' : ''}
     >
-      ${resetLabel}
+      <span ${isDisabled ? 'disabled' : ''}>${resetLabel}</span>
     </button>
     ${isEditing ? `
       <button
         class="event__rollup-btn"
         type="button"
-        ${isDisabled ? 'disabled' : ''}
       >
-        <span class="visually-hidden">Open event</span>
+        <span class="visually-hidden" ${isDisabled ? 'disabled' : ''}>Open event</span>
       </button>`
     : ''}
   `;
